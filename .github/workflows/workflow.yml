@@ -1,0 +1,84 @@
+name: build
+
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    name: build
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install deps
+        run: sudo apt-get update && sudo apt-get install desktop-file-utils libfuse2 snapd 
+
+      - name: Install gzdoom
+        run: sudo snap install gzdoom
+
+      - name: Download appimage build tool
+        run: |
+          wget -nv -c https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
+          chmod a+x ./appimagetool-x86_64.AppImage
+
+      - name: test
+        run: ls /snap 
+
+      - name: test
+        run: ls /snap/gzdoom
+
+      # - name: Copy required files (self contained)
+      #   run: |
+      #     mkdir -p AppDir/usr/
+      #     cp -Rf /snap/newsboat/current/usr/lib/x86_64-linux-gnu AppDir/usr/lib
+      #     mkdir -p AppDir/usr/local/bin
+      #     cp -Rf /snap/newsboat/current/usr/local/bin/newsboat AppDir/usr/local/bin
+      #     cp /snap/core20/current/usr/lib/x86_64-linux-gnu/libjson-c.so.4 AppDir/usr/lib
+      #     cp /snap/core20/current/usr/lib/x86_64-linux-gnu/libjson-c.so.4.0.0 AppDir/usr/lib
+      #     cp /snap/core20/current/usr/lib/x86_64-linux-gnu/libssl.so.1.1 AppDir/usr/lib
+      #     cp /snap/core20/current/usr/lib/x86_64-linux-gnu/libsqlite3.so.0 AppDir/usr/lib
+      #     cp /snap/core20/current/usr/lib/x86_64-linux-gnu/libsqlite3.so.0.8.6 AppDir/usr/lib
+      #     cp /snap/core20/current/usr/lib/x86_64-linux-gnu/libdl-2.31.so AppDir/usr/lib
+      #     cp /snap/core20/current/usr/lib/x86_64-linux-gnu/libdl.so.2 AppDir/usr/lib
+      #     cp /snap/core20/current/usr/lib/x86_64-linux-gnu/libncursesw.so.6 AppDir/usr/lib
+      #     cp /snap/core20/current/usr/lib/x86_64-linux-gnu/libncursesw.so.6.2 AppDir/usr/lib
+      #     cp /snap/core20/current/usr/lib/x86_64-linux-gnu/libzstd.so.1 AppDir/usr/lib
+      #     cp /snap/core20/current/usr/lib/x86_64-linux-gnu/libzstd.so.1.4.4 AppDir/usr/lib
+      #     cp /snap/core20/current/usr/lib/x86_64-linux-gnu/libz.so.1 AppDir/usr/lib
+      #     cp /snap/core20/current/usr/lib/x86_64-linux-gnu/libz.so.1.2.11 AppDir/usr/lib
+      #     cp /snap/core20/current/usr/lib/x86_64-linux-gnu/libkeyutils.so.1 AppDir/usr/lib
+      #     cp /snap/core20/current/usr/lib/x86_64-linux-gnu/libkeyutils.so.1.8 AppDir/usr/lib
+      #     cp /snap/core20/current/usr/lib/x86_64-linux-gnu/libcrypto.so.1.1 AppDir/usr/lib
+      #     cp /snap/core20/current/usr/lib/x86_64-linux-gnu/libhogweed.so.5 AppDir/usr/lib
+      #     cp /snap/core20/current/usr/lib/x86_64-linux-gnu/libhogweed.so.5.0 AppDir/usr/lib
+      #     cp /snap/core20/current/usr/lib/x86_64-linux-gnu/libnettle.so.7 AppDir/usr/lib
+      #     cp /snap/core20/current/usr/lib/x86_64-linux-gnu/libnettle.so.7.0 AppDir/usr/lib
+      #     cp /snap/core20/current/usr/lib/x86_64-linux-gnu/libunistring.so.2 AppDir/usr/lib
+      #     cp /snap/core20/current/usr/lib/x86_64-linux-gnu/libunistring.so.2.1.0 AppDir/usr/lib
+      #     cp VERSION AppDir/
+      #     cp scripts/bscroll AppDir/usr/local/bin
+      #     cp scripts/paginate AppDir/usr/local/bin
+      #   if: contains(matrix.version.type, 'self_contained')
+
+      # # - name: Replace usr references
+      # #   run: |
+      # #     pushd AppDir
+      # #     find usr/ -type f -executable -exec sed -i -e "s|/usr|././|g" {} \;
+      # #     popd
+
+      # - name: Build appimage
+      #   run: ./appimagetool-x86_64.AppImage AppDir
+
+      # - name: Upload AppImage (stable)
+      #   uses: svenstaro/upload-release-action@v2
+      #   with:
+      #     repo_token: ${{ secrets.GITHUB_TOKEN }}
+      #     file: doom_builder.AppImage
+      #     asset_name: doom_builder.AppImage
+      #     tag: stable
+      #     overwrite: true
+      #   if: github.ref == 'refs/heads/master'
+
