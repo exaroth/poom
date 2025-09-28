@@ -28,7 +28,13 @@ jobs:
         run: ls /snap 
 
       - name: test
-        run: ls /snap/gzdoom
+        run: ls /snap/gzdoom/current/
+
+      - name: test
+        run: ls /snap/gzdoom/current/usr/local/bin
+
+      - name: test
+        run: ls /snap/gzdoom/current/usr/lib/x86_64-linux-gnu
 
       # - name: Copy required files (self contained)
       #   run: |
