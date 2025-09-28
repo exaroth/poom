@@ -18,53 +18,59 @@ jobs:
 
       - name: Install gzdoom
         run: sudo snap install gzdoom
+    
+      - name: test
+        run: /snap/gzdoom/current/usr/share
 
-      - name: Download appimage build tool
-        run: |
-          wget -nv -c https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
-          chmod a+x ./appimagetool-x86_64.AppImage
+      - name: test
+        run: /snap/gzdoom/current/usr/share/gzdoom
 
-      - name: Copy required files
-        run: |
-          mkdir -p AppDir/usr/
-          cp -Rf /snap/gzdoom/current/usr/lib/x86_64-linux-gnu AppDir/usr/lib
-          mkdir -p AppDir/usr/local/bin
-          cp -Rf /snap/gzdoom/current/usr/local/bin/gzdoom AppDir/usr/local/bin
+      # - name: Download appimage build tool
+      #   run: |
+      #     wget -nv -c https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
+      #     chmod a+x ./appimagetool-x86_64.AppImage
 
-          mv AppDir/usr/lib/pulseaudio/* AppDir/usr/lib
-          mv AppDir/usr/lib/libcanberra-0.30/* AppDir/usr/lib
-          mv AppDir/usr/lib/sasl2/* AppDir/usr/lib
+      # - name: Copy required files
+      #   run: |
+      #     mkdir -p AppDir/usr/
+      #     cp -Rf /snap/gzdoom/current/usr/lib/x86_64-linux-gnu AppDir/usr/lib
+      #     mkdir -p AppDir/usr/local/bin
+      #     cp -Rf /snap/gzdoom/current/usr/local/bin/gzdoom AppDir/usr/local/bin
 
-          rm -Rf AppDir/usr/lib/libgtk2.0-0
-          rm -Rf AppDir/usr/lib/libgtk-3-0
-          rm -Rf AppDir/usr/lib/libexec
-          rm -Rf AppDir/usr/lib/ao
-          rm -Rf AppDir/usr/lib/avahi
+      #     mv AppDir/usr/lib/pulseaudio/* AppDir/usr/lib
+      #     mv AppDir/usr/lib/libcanberra-0.30/* AppDir/usr/lib
+      #     mv AppDir/usr/lib/sasl2/* AppDir/usr/lib
 
-          rm -Rf AppDir/usr/lib/cmake
-          rm -Rf AppDir/usr/lib/gio
-          rm -Rf AppDir/usr/lib/perl
+      #     rm -Rf AppDir/usr/lib/libgtk2.0-0
+      #     rm -Rf AppDir/usr/lib/libgtk-3-0
+      #     rm -Rf AppDir/usr/lib/libexec
+      #     rm -Rf AppDir/usr/lib/ao
+      #     rm -Rf AppDir/usr/lib/avahi
 
-          rm -Rf AppDir/usr/lib/libQt*
-          rm -Rf AppDir/usr/lib/qt5
-          rm -Rf AppDir/usr/lib/qt-default
+      #     rm -Rf AppDir/usr/lib/cmake
+      #     rm -Rf AppDir/usr/lib/gio
+      #     rm -Rf AppDir/usr/lib/perl
 
-          rm -Rf AppDir/usr/lib/libpolkit*
-          rm -Rf AppDir/usr/lib/libKF5*
-          rm -Rf AppDir/usr/lib/gdk-pixbuf-2.0
-          rm -Rf AppDir/usr/lib/gtk-2.0
-          rm -Rf AppDir/usr/lib/gtk-3.0
+      #     rm -Rf AppDir/usr/lib/libQt*
+      #     rm -Rf AppDir/usr/lib/qt5
+      #     rm -Rf AppDir/usr/lib/qt-default
 
-          cp appimagetool-x86_64.AppImage AppDir/usr/local/bin
+      #     rm -Rf AppDir/usr/lib/libpolkit*
+      #     rm -Rf AppDir/usr/lib/libKF5*
+      #     rm -Rf AppDir/usr/lib/gdk-pixbuf-2.0
+      #     rm -Rf AppDir/usr/lib/gtk-2.0
+      #     rm -Rf AppDir/usr/lib/gtk-3.0
 
-      - name: Build appimage
-        run: ARCH=x86_64 ./appimagetool-x86_64.AppImage AppDir
+      #     cp appimagetool-x86_64.AppImage AppDir/usr/local/bin
 
-      - name: Upload AppImage (stable)
-        uses: svenstaro/upload-release-action@v2
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: doom-builder-x86_64.AppImage
-          asset_name: doom_builder
-          tag: stable
-          overwrite: true
+      # - name: Build appimage
+      #   run: ARCH=x86_64 ./appimagetool-x86_64.AppImage AppDir
+
+      # - name: Upload AppImage (stable)
+      #   uses: svenstaro/upload-release-action@v2
+      #   with:
+      #     repo_token: ${{ secrets.GITHUB_TOKEN }}
+      #     file: doom-builder-x86_64.AppImage
+      #     asset_name: doom_builder
+      #     tag: stable
+      #     overwrite: true
