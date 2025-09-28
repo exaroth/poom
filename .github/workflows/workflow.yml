@@ -20,7 +20,7 @@ jobs:
         run: sudo snap install gzdoom
     
       - name: test
-        run: ls /snap/gzdoom/current/usr/share
+        run: find /snap/gzdoom/current/usr/share  -type f -name "gzdoom.pk3"
 
       - name: test
         run: ls /snap/gzdoom/current/usr/share/gzdoom
