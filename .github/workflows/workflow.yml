@@ -36,6 +36,13 @@ jobs:
       - name: test
         run: ls /snap/gzdoom/current/usr/lib/x86_64-linux-gnu
 
+      - name: Copy required files
+        run: |
+          mkdir -p AppDir/usr/
+          cp -Rf /snap/gzdoom/current/usr/lib/x86_64-linux-gnu AppDir/usr/lib
+          mkdir -p AppDir/usr/local/bin
+          cp -Rf /snap/gzdoom/current/usr/local/bin/gzdoom AppDir/usr/local/bin
+
       # - name: Copy required files (self contained)
       #   run: |
       #     mkdir -p AppDir/usr/
@@ -75,16 +82,15 @@ jobs:
       # #     find usr/ -type f -executable -exec sed -i -e "s|/usr|././|g" {} \;
       # #     popd
 
-      # - name: Build appimage
-      #   run: ./appimagetool-x86_64.AppImage AppDir
+      - name: Build appimage
+        run: ARCH=x86_64 ./appimagetool-x86_64.AppImage AppDir
 
-      # - name: Upload AppImage (stable)
-      #   uses: svenstaro/upload-release-action@v2
-      #   with:
-      #     repo_token: ${{ secrets.GITHUB_TOKEN }}
-      #     file: doom_builder.AppImage
-      #     asset_name: doom_builder.AppImage
-      #     tag: stable
-      #     overwrite: true
-      #   if: github.ref == 'refs/heads/master'
+      - name: Upload AppImage (stable)
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: doom_builder.AppImage
+          asset_name: doom_builder.AppImage
+          tag: stable
+          overwrite: true
 
