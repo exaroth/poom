@@ -1,0 +1,3 @@
+[submodule "gzdoom"]
+	path = gzdoom
+	url = https://github.com/ZDoom/gzdoom.git
