@@ -13,19 +13,17 @@ jobs:
       matrix:
         config:
 
-        # - name: Linux GCC Latest # rolling default, not actually latest
-        #   os: ubuntu-latest
-        #   extra_options: -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++
-        #   deps_cmdline: sudo apt-get update && sudo apt-get install libsdl2-dev libvpx-dev libwebp-dev
-        #   build_type: Release
-        #   export_appimage: true
-
-        - name: Linux Clang 15
-          os: ubuntu-22.04
-          extra_options: -DCMAKE_C_COMPILER=clang-15 -DCMAKE_CXX_COMPILER=clang++-15
-          deps_cmdline: sudo apt-get update && sudo apt-get install clang-15 libsdl2-dev libvpx-dev libwebp-dev
+        - name: Linux GCC Latest # rolling default, not actually latest
+          os: ubuntu-latest
+          extra_options: -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++
+          deps_cmdline: sudo apt-get update && sudo apt-get install libsdl2-dev libvpx-dev libwebp-dev
           build_type: Release
-          export_appimage: true
+
+        # - name: Linux Clang 15
+        #   os: ubuntu-22.04
+        #   extra_options: -DCMAKE_C_COMPILER=clang-15 -DCMAKE_CXX_COMPILER=clang++-15
+        #   deps_cmdline: sudo apt-get update && sudo apt-get install clang-15 libsdl2-dev libvpx-dev libwebp-dev
+        #   build_type: Release
     steps:
       - uses: actions/checkout@v4
 
