@@ -1,0 +1,82 @@
+#!/bin/bash
+
+
+TEMP_DIR_NAME="/tmp/doom-builder"
+GZDOOM_DIR="$HOME/.config/gzdoom"
+
+usage() {
+    echo "Usage: doom-builder <options>
+
+Options:
+  -f, --file          Path to pk3 or wad file to include.
+  -s, --i3status      Path to base wad file.
+  -h, --help          Print help.
+    "
+	exit 2
+}
+
+FILE_LIST=()
+shift $((OPTIND-1))
+for arg in "$@"; do
+  shift
+  case "$arg" in
+    '--help')   set -- "$@" '-h'   ;;
+    '--file')   set -- "$@" '-f'   ;;
+    '--wad')    set -- "$@" '-w'   ;;
+    *)          set -- "$@" "$arg" ;;
+  esac
+done
+
+while getopts ":f:w:h" arg
+do
+	case $arg in
+		f) FILE_LIST+=("$OPTARG");;
+		w) WAD="$OPTARG";;
+		*) usage ;;
+	esac
+done
+
+cleanup() {
+    echo "Cleaning up"
+    rm -Rf "$TEMP_DIR_NAME"
+}
+
+mkdir -p "$TEMP_DIR_NAME"
+mkdir -p "$TEMP_DIR_NAME/files"
+trap cleanup EXIT
+
+if [ ! -n "$WAD" ]; then 
+	echo "!! WARNING !!: No base WAD file provided, building using demo Doom."
+    cp -Rf "$APPDIR/wad/DEMO.WAD" "$TEMP_DIR_NAME/GAME.WAD"
+else
+    if [ ! -f "$WAD" ]; then 
+        if [ -f "${GZDOOM_DIR}/$WAD" ]; then
+            WAD="${GZDOOM_DIR}/$WAD"
+        else
+            echo "WAD file $f does not exist"
+            exit 1
+        fi
+    fi
+    cp -Rf "$WAD" "$TEMP_DIR_NAME/GAME.WAD"
+fi
+
+
+for idx in "${!FILE_LIST[@]}"
+do
+    f="${FILE_LIST[idx]}"
+    if [ ! -f "$f" ]; then
+        if [ -f "${GZDOOM_DIR}/${f}" ]; then
+            f="${GZDOOM_DIR}/${f}"
+        else
+            echo "File $f does not exist"
+            exit 1
+        fi
+    fi
+    echo "copying $f"
+    cp -Rf "$f" "$TEMP_DIR_NAME/files"
+done
+
+cp -Rf "$APPDIR/usr" "$TEMP_DIR_NAME"
+cp -Rf "$APPDIR/app/"* "$TEMP_DIR_NAME"
+
+$APPDIR/appimagetool "$TEMP_DIR_NAME" doom

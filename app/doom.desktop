@@ -1,0 +1,10 @@
+[Desktop Entry]
+X-AppImage-Arch=x86_64
+X-AppImage-Name=doom
+Version=1.0
+Name=doom
+Exec=gzdoom
+Terminal=false
+Icon=doom
+Type=Application
+Categories=Game;
