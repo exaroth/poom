@@ -88,7 +88,8 @@ jobs:
           mkdir tmp
           cp -Rf gzdoom/build/gzdoom.AppImage tmp
           ./tmp/gzdoom.AppImage --appimage-extract
-          cp -Rf squashfs-root/AppRun squashfs-root/AppRun.env squashfs-root/usr squashfs-root/lib squashfs-root/runtime AppDir/app
+          cp -Rf squashfs-root/AppRun squashfs-root/AppRun.env squashfs-root/lib squashfs-root/runtime AppDir/app
+          cp -Rf squashfs-root/usr AppDir
           cp ./appimagetool-x86_64.AppImage AppDir/appimagetool
           mkdir -p AppDir/wad
           wget 'https://archive.org/download/doom-wads/Doom%20%28v1.9%29%20%28Demo%29.zip' -O doom_demo.zip
