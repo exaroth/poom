@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 TEMP_DIR_NAME="/tmp/doom-builder"
 GZDOOM_DIR="$HOME/.config/gzdoom"
 
@@ -9,7 +8,7 @@ usage() {
 
 Options:
   -f, --file          Path to pk3 or wad file to include.
-  -s, --i3status      Path to base wad file.
+  -w, --base-wad      Path to base wad/pk3 file.
   -h, --help          Print help.
     "
 	exit 2
@@ -20,10 +19,10 @@ shift $((OPTIND-1))
 for arg in "$@"; do
   shift
   case "$arg" in
-    '--help')   set -- "$@" '-h'   ;;
-    '--file')   set -- "$@" '-f'   ;;
-    '--wad')    set -- "$@" '-w'   ;;
-    *)          set -- "$@" "$arg" ;;
+    '--help')        set -- "$@" '-h'   ;;
+    '--file')        set -- "$@" '-f'   ;;
+    '--base-wad')    set -- "$@" '-w'   ;;
+    *)               set -- "$@" "$arg" ;;
   esac
 done
 
@@ -46,7 +45,8 @@ mkdir -p "$TEMP_DIR_NAME/files"
 trap cleanup EXIT
 
 if [ ! -n "$WAD" ]; then 
-	echo "!! WARNING !!: No base WAD file provided, building using demo Doom."
+	echo "!!                    WARNING                     !!"
+    echo "No base WAD file provided, building using demo Doom."
     cp -Rf "$APPDIR/wad/DEMO.WAD" "$TEMP_DIR_NAME/GAME.WAD"
 else
     if [ ! -f "$WAD" ]; then 

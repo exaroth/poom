@@ -11,7 +11,7 @@ for file in "$APPDIR/files"/*
 do
     if [ -f "$file" ]; then
         mods+=($(basename "$file"))
-        f_str=" -file ${file}"
+        f_str="${f_str} -file ${file}"
     fi
 done
 
@@ -19,13 +19,12 @@ for file in "$@"
 do
     if [ -f "$file" ] || [ -f "${GZDOOM_DIR}/${file}" ]; then
         mods+=($(basename "$file"))
-        f_str=" -file ${APPDIR}/files/${file}"
+        f_str="${f_str} -file ${file}"
     else
         echo "File $file does not exist"
         exit 1
     fi
 done
-
 
 echo "Enabled WADs:"
 echo "Base WAD: $BASE_WAD"
