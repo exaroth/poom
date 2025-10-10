@@ -3,20 +3,22 @@
 export LD_LIBRARY_PATH="$APPDIR"/usr/lib:"$LD_LIBRARY_PATH"
 
 GZDOOM_DIR="$HOME/.config/gzdoom"
+BASE_WAD="${APPDIR}/GAME.WAD"
 
 f_str=""
+mods=()
 for file in "$APPDIR/files"/*
 do
     if [ -f "$file" ]; then
+        mods+=($(basename "$file"))
         f_str=" -file ${file}"
     fi
 done
 
-echo "$f_str"
-
 for file in "$@"
 do
     if [ -f "$file" ] || [ -f "${GZDOOM_DIR}/${file}" ]; then
+        mods+=($(basename "$file"))
         f_str=" -file ${APPDIR}/files/${file}"
     else
         echo "File $file does not exist"
@@ -24,5 +26,14 @@ do
     fi
 done
 
-cmd="${APPDIR}/usr/bin/gzdoom -iwad ${APPDIR}/GAME.WAD ${f_str}"
+
+echo "Enabled WADs:"
+echo "Base WAD: $BASE_WAD"
+echo "Modifier WADs"
+for w in "${mods[@]}"
+    do
+        echo "- $w"
+done 
+
+cmd="${APPDIR}/usr/bin/gzdoom -iwad $BASE_WAD ${f_str}"
 $cmd
