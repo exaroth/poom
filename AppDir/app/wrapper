@@ -5,6 +5,44 @@ export LD_LIBRARY_PATH="$APPDIR"/usr/lib:"$LD_LIBRARY_PATH"
 GZDOOM_DIR="$HOME/.config/gzdoom"
 BASE_WAD="${APPDIR}/GAME.WAD"
 
+usage() {
+    echo "Usage: doom <options> <wad_files..>
+
+Built with doom-builder (github.com/exaroth/doom-builder)
+
+Options:
+  -h, --help           Show usage
+"
+	exit 2
+}
+
+shift $((OPTIND-1))
+for arg in "$@"; do
+  shift
+  case "$arg" in
+    '--help')        set -- "$@" '-h'   ;;
+    *)               set -- "$@" "$arg" ;;
+  esac
+done
+
+ARGS=""
+while [ $# -gt 0 ]
+do
+    unset OPTIND
+    unset OPTARG
+    while getopts h options
+    do
+        case $options in
+                h) usage
+                    ;;
+                *)  ;;
+        esac
+   done
+   shift $((OPTIND-1))
+   ARGS="${ARGS} $1 "
+   shift
+done
+
 f_str=""
 mods=()
 for file in "$APPDIR/files"/*
@@ -15,7 +53,7 @@ do
     fi
 done
 
-for file in "$@"
+for file in "${ARGS[@]}"
 do
     if [ -f "$file" ] || [ -f "${GZDOOM_DIR}/${file}" ]; then
         mods+=($(basename "$file"))
