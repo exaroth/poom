@@ -108,8 +108,7 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: doom-builder-x86_64.AppImage
-          asset_name: doom_builder
+          file: doom-builder.zip
           asset_name: ${{ matrix.config.filename }}
           tag: stable
           overwrite: true
