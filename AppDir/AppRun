@@ -45,8 +45,10 @@ mkdir -p "$TEMP_DIR_NAME/files"
 trap cleanup EXIT
 
 if [ ! -n "$WAD" ]; then 
-	echo "!!!!!!!!               WARNING              !!!!!!!!"
-    echo "No base WAD file provided, building using demo Doom."
+	echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+	echo "!!!!!!!!             WARNING                !!!!!!!!"
+	echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+    echo "No base WAD file provided, building using Doom demo WAD."
     cp -Rf "$APPDIR/wad/DEMO.WAD" "$TEMP_DIR_NAME/GAME.WAD"
 else
     if [ ! -f "$WAD" ]; then 

@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - master
+      - develop
+
 jobs:
   build:
     runs-on: ${{ matrix.config.os }}
@@ -17,13 +19,13 @@ jobs:
           os: ubuntu-latest
           extra_options: -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++
           deps_cmdline: sudo apt-get update && sudo apt-get install libsdl2-dev libvpx-dev libwebp-dev
-          build_type: Release
+          filename: doom-builder.zip
 
-        # - name: Linux Clang 15
-        #   os: ubuntu-22.04
-        #   extra_options: -DCMAKE_C_COMPILER=clang-15 -DCMAKE_CXX_COMPILER=clang++-15
-        #   deps_cmdline: sudo apt-get update && sudo apt-get install clang-15 libsdl2-dev libvpx-dev libwebp-dev
-        #   build_type: Release
+        - name: Linux Clang 15
+          os: ubuntu-22.04
+          extra_options: -DCMAKE_C_COMPILER=clang-15 -DCMAKE_CXX_COMPILER=clang++-15
+          deps_cmdline: sudo apt-get update && sudo apt-get install clang-15 libsdl2-dev libvpx-dev libwebp-dev
+          filename: doom-builder-clang.zip
     steps:
       - uses: actions/checkout@v4
 
@@ -35,7 +37,7 @@ jobs:
         uses: proudust/gh-describe@v2
 
       - name: Install general deps
-        run: sudo apt-get update && sudo apt-get install desktop-file-utils libfuse2 snapd
+        run: sudo apt-get update && sudo apt-get install desktop-file-utils libfuse2 snapd zip
 
       - name: Download appimage build tool
         run: |
@@ -97,7 +99,10 @@ jobs:
           mv DOOM1.WAD AppDir/wad/DEMO.WAD
 
       - name: Build appimage
-        run: ARCH=x86_64 ./appimagetool-x86_64.AppImage AppDir
+        run: ARCH=x86_64 ./appimagetool-x86_64.AppImage AppDir doom-builder
+
+      - name: Zip package
+        run: zip doom-builder.zip doom-builder
 
       - name: Upload AppImage (stable)
         uses: svenstaro/upload-release-action@v2
@@ -105,5 +110,6 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: doom-builder-x86_64.AppImage
           asset_name: doom_builder
+          asset_name: ${{ matrix.config.filename }}
           tag: stable
           overwrite: true
