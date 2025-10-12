@@ -114,3 +114,14 @@ jobs:
           asset_name: ${{ matrix.config.filename }}
           tag: stable
           overwrite: true
+        if: github.ref == 'refs/heads/master'
+
+      - name: Upload AppImage (stable)
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: doom-builder.zip
+          asset_name: ${{ matrix.config.filename }}
+          tag: nightly
+          overwrite: true
+        if: github.ref == 'refs/heads/develop'
