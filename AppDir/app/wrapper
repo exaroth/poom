@@ -8,10 +8,10 @@ BASE_WAD="${APPDIR}/GAME.WAD"
 usage() {
     echo "Usage: doom <options> <wad_files..>
 
-Built with doom-builder (github.com/exaroth/doom-builder)
-
 Options:
   -h, --help           Show usage
+
+Built with doom-builder (github.com/exaroth/doom-builder)
 "
 	exit 2
 }
@@ -43,6 +43,7 @@ do
    shift
 done
 
+ARGS=($ARGS)
 f_str=""
 mods=()
 for file in "$APPDIR/files"/*
