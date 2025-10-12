@@ -20,12 +20,14 @@ jobs:
           extra_options: -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++
           deps_cmdline: sudo apt-get update && sudo apt-get install libsdl2-dev libvpx-dev libwebp-dev
           filename: doom-builder.zip
+          build_type: Release
 
         - name: Linux Clang 15
           os: ubuntu-22.04
           extra_options: -DCMAKE_C_COMPILER=clang-15 -DCMAKE_CXX_COMPILER=clang++-15
           deps_cmdline: sudo apt-get update && sudo apt-get install clang-15 libsdl2-dev libvpx-dev libwebp-dev
           filename: doom-builder-clang.zip
+          build_type: Release
     steps:
       - uses: actions/checkout@v4
 
