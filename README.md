@@ -7,7 +7,7 @@ Doom builder is a simple tool for creating customized, self contained Doom execu
 
 ## Installation
 
-Download and unzip [doom-builder.zip](https://github.com/exaroth/doom-builder/releases/download/stable/doom-builder.zip) from [Releases](https://github.com/exaroth/doom-builder/releases/tag/stable) page.
+Download [doom-builder.zip](https://github.com/exaroth/doom-builder/releases/download/stable/doom-builder.zip) from [Releases](https://github.com/exaroth/doom-builder/releases/tag/stable) page and unzip.
 
 ## Usage
 
