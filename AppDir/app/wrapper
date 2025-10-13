@@ -43,7 +43,7 @@ do
    shift
 done
 
-ARGS=($ARGS)
+eval "ARGS=($ARGS)"
 f_str=""
 mods=()
 for file in "$APPDIR/files"/*
@@ -54,11 +54,23 @@ do
     fi
 done
 
+cleanup() {
+    echo "Cleaning up"
+    rm -Rf /tmp/.doom-shrt
+}
+
+mkdir /tmp/.doom-shrt
+trap cleanup EXIT
+
 for file in "${ARGS[@]}"
 do
     if [ -f "$file" ] || [ -f "${GZDOOM_DIR}/${file}" ]; then
-        mods+=($(basename "$file"))
-        f_str="${f_str} -file ${file}"
+        mods+=("$(basename "$file")")
+        t_name=$(basename "$file" | xargs)
+        t_name=$(echo "$t_name" | sed -e "s/ /-/g" -e "s/\"//g" -e "s/\'//g")
+        t_path="/tmp/.doom-shrt/${t_name}"
+        ln -s "$file" "$t_path"
+        f_str="${f_str} -file ${t_path}"
     else
         echo "File $file does not exist"
         exit 1
