@@ -69,7 +69,11 @@ do
         t_name=$(basename "$file" | xargs)
         t_name=$(echo "$t_name" | sed -e "s/ /-/g" -e "s/\"//g" -e "s/\'//g")
         t_path="/tmp/.doom-shrt/${t_name}"
-        ln -s "$file" "$t_path"
+        if [ -f "${GZDOOM_DIR}/${file}" ]; then
+            ln -s "$GZDOOM_DIR/$file" "$t_path"
+        else
+            ln -s "$file" "$t_path"
+        fi
         f_str="${f_str} -file ${t_path}"
     else
         echo "File $file does not exist"
