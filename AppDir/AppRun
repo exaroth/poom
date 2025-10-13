@@ -74,7 +74,10 @@ do
             exit 1
         fi
     fi
-    cp -Rf "$f" "$TEMP_DIR_NAME/files"
+
+    t_name=$(basename "$f" | xargs)
+    t_name=$(echo "$t_name" | sed -e "s/ /-/g" -e "s/\"//g" -e "s/\'//g")
+    cp -Rf "$f" "$TEMP_DIR_NAME/files/$t_name"
 done
 
 cp -Rf "$APPDIR/usr" "$TEMP_DIR_NAME"
