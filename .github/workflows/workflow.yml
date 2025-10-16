@@ -19,14 +19,14 @@ jobs:
           os: ubuntu-latest
           extra_options: -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++
           deps_cmdline: sudo apt-get update && sudo apt-get install libsdl2-dev libvpx-dev libwebp-dev
-          filename: doom-builder.zip
+          filename: poom.zip
           build_type: Release
 
         - name: Linux Clang 15
           os: ubuntu-22.04
           extra_options: -DCMAKE_C_COMPILER=clang-15 -DCMAKE_CXX_COMPILER=clang++-15
           deps_cmdline: sudo apt-get update && sudo apt-get install clang-15 libsdl2-dev libvpx-dev libwebp-dev
-          filename: doom-builder-clang.zip
+          filename: poom-clang.zip
           build_type: Release
     steps:
       - uses: actions/checkout@v4
@@ -101,16 +101,16 @@ jobs:
           mv DOOM1.WAD AppDir/wad/DEMO.WAD
 
       - name: Build appimage
-        run: ARCH=x86_64 ./appimagetool-x86_64.AppImage AppDir doom-builder
+        run: ARCH=x86_64 ./appimagetool-x86_64.AppImage AppDir poom
 
       - name: Zip package
-        run: zip doom-builder.zip doom-builder
+        run: zip poom.zip poom
 
       - name: Upload AppImage (stable)
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: doom-builder.zip
+          file: poom.zip
           asset_name: ${{ matrix.config.filename }}
           tag: stable
           overwrite: true
@@ -120,7 +120,7 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: doom-builder.zip
+          file: poom.zip
           asset_name: ${{ matrix.config.filename }}
           tag: nightly
           overwrite: true

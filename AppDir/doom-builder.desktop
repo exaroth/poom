@@ -1,8 +1,8 @@
 [Desktop Entry]
 X-AppImage-Arch=x86_64
-X-AppImage-Name=doom-builder
+X-AppImage-Name=poom
 Version=1.0
-Name=doom-builder
+Name=poom
 Exec=gzdoom
 Terminal=true
 Icon=doom-builder

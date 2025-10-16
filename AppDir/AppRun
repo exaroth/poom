@@ -4,7 +4,7 @@ TEMP_DIR_NAME="/tmp/doom-builder"
 GZDOOM_DIR="$HOME/.config/gzdoom"
 
 usage() {
-    echo "Usage: doom-builder <options>
+    echo "Usage: poom <options>
 
 Options:
   -f, --file          Path to pk3 or wad file to include.
