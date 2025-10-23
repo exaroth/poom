@@ -27,9 +27,9 @@ To build custom Doom instance add list of WADs/pk3s you want to include via `-f`
 ```
 
 > [!IMPORTANT]
-> :warning:   Doom builder will use shareware version of Doom by default if proper Doom 1/2 WAD is not provided via `--base-wad` parameter. Shareware version does not allow for using custom WAD files.
+> :warning:   Poom will use shareware version of Doom by default if proper Doom 1/2 WAD is not provided via `--base-wad` parameter. Shareware version does not allow for using custom WAD files.
 
-Doom Builder will create `doom` instance which, if executed without any parameters, will run Doom with provided custom wad files, additionally you can pass list of additional WADs as positional parameters, eg. using above example:
+Poom will create `doom` instance which, if executed without any parameters, will run Doom with provided custom wad files, additionally you can pass list of additional WADs as positional parameters, eg. using above example:
 
 ```
 ./doom ~/eviternity.wad
