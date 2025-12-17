@@ -1,3 +1,6 @@
 [submodule "gzdoom"]
 	path = gzdoom
 	url = https://github.com/ZDoom/gzdoom.git
+[submodule "UZDoom"]
+	path = UZDoom
+	url = https://github.com/UZDoom/UZDoom.git

@@ -17,17 +17,39 @@ jobs:
 
         - name: Linux GCC Latest # rolling default, not actually latest
           os: ubuntu-latest
+          submodule: gzdoom
+          commit: f4cba8e
           extra_options: -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++
           deps_cmdline: sudo apt-get update && sudo apt-get install libsdl2-dev libvpx-dev libwebp-dev
-          filename: poom.zip
+          filename: poom-gzdoom.zip
           build_type: Release
 
         - name: Linux Clang 15
           os: ubuntu-22.04
+          submodule: gzdoom
+          commit: f4cba8e
           extra_options: -DCMAKE_C_COMPILER=clang-15 -DCMAKE_CXX_COMPILER=clang++-15
           deps_cmdline: sudo apt-get update && sudo apt-get install clang-15 libsdl2-dev libvpx-dev libwebp-dev
-          filename: poom-clang.zip
+          filename: poom-gzdoom-clang.zip
           build_type: Release
+
+        - name: UZDoom
+          os: ubuntu-latest
+          submodule: UZDoom
+          commit: 584dd1d1
+          extra_options: -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++
+          deps_cmdline: 
+            sudo apt-get update && sudo apt-get install \
+                          libopenal-dev \
+                          waylandpp-dev \
+                          libsdl2-dev   \
+                          libwebp-dev   \
+                          libbz2-dev    \
+                          libomp-dev    \
+                          libvpx-dev
+          filename: poom-uzdoom.zip
+          build_type: Release
+
     steps:
       - uses: actions/checkout@v4
 
@@ -57,23 +79,23 @@ jobs:
       - name: Configure
         shell: bash
         run: |
-          cd gzdoom
+          cd {{ matrix.config.submodule }}
           git pull origin master
-          git checkout f4cba8e
+          git checkout {{ matrix.config.commit }}
           cmake -B build -DCMAKE_BUILD_TYPE=${{ matrix.config.build_type }} -DPK3_QUIET_ZIPDIR=ON ${{ matrix.config.extra_options }} .
 
       - name: Build
         shell: bash
         run: |
-          cd gzdoom
+          cd {{ matrix.config.submodule }}
           export GIT_DESCRIBE="${{ steps.ghd.outputs.describe }}"
           export MAKEFLAGS=--keep-going
           cmake --build build --config ${{ matrix.config.build_type }} --parallel 3
 
-      - name: Create gzdoom package
+      - name: Create package
         shell: bash
         run: |
-          cd gzdoom/build
+          cd {{ matrix.config.submodule }}/build
           mkdir package AppDir
           cmake --install . --prefix "$(realpath AppDir)/usr"
 
@@ -84,14 +106,14 @@ jobs:
 
           export GIT_DESCRIBE="${{ steps.ghd.outputs.describe }}"
           ./appimage-builder --skip-tests --recipe ../tools/AppImageBuilder.yml
-          mv *.AppImage gzdoom.AppImage
+          mv *.AppImage doom.AppImage
 
       - name: Copy package contents
         shell: bash
         run: |
           mkdir tmp
-          cp -Rf gzdoom/build/gzdoom.AppImage tmp
-          ./tmp/gzdoom.AppImage --appimage-extract
+          cp -Rf {{ matrix.config.submodule }}/build/doom.AppImage tmp
+          ./tmp/doom.AppImage --appimage-extract
           cp -Rf squashfs-root/AppRun squashfs-root/lib squashfs-root/runtime AppDir/app
           cp -Rf squashfs-root/usr AppDir
           cp ./appimagetool-x86_64.AppImage AppDir/appimagetool
