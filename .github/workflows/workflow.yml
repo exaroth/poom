@@ -79,15 +79,15 @@ jobs:
       - name: Configure
         shell: bash
         run: |
-          cd {{ matrix.config.submodule }}
+          cd ${{ matrix.config.submodule }}
           git pull origin master
-          git checkout {{ matrix.config.commit }}
+          git checkout ${{ matrix.config.commit }}
           cmake -B build -DCMAKE_BUILD_TYPE=${{ matrix.config.build_type }} -DPK3_QUIET_ZIPDIR=ON ${{ matrix.config.extra_options }} .
 
       - name: Build
         shell: bash
         run: |
-          cd {{ matrix.config.submodule }}
+          cd ${{ matrix.config.submodule }}
           export GIT_DESCRIBE="${{ steps.ghd.outputs.describe }}"
           export MAKEFLAGS=--keep-going
           cmake --build build --config ${{ matrix.config.build_type }} --parallel 3
@@ -95,7 +95,7 @@ jobs:
       - name: Create package
         shell: bash
         run: |
-          cd {{ matrix.config.submodule }}/build
+          cd ${{ matrix.config.submodule }}/build
           mkdir package AppDir
           cmake --install . --prefix "$(realpath AppDir)/usr"
 
@@ -112,7 +112,7 @@ jobs:
         shell: bash
         run: |
           mkdir tmp
-          cp -Rf {{ matrix.config.submodule }}/build/doom.AppImage tmp
+          cp -Rf ${{ matrix.config.submodule }}/build/doom.AppImage tmp
           ./tmp/doom.AppImage --appimage-extract
           cp -Rf squashfs-root/AppRun squashfs-root/lib squashfs-root/runtime AppDir/app
           cp -Rf squashfs-root/usr AppDir
