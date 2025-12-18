@@ -19,6 +19,7 @@ jobs:
           os: ubuntu-latest
           submodule: gzdoom
           commit: f4cba8e
+          branch: master
           extra_options: -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++
           deps_cmdline: sudo apt-get update && sudo apt-get install libsdl2-dev libvpx-dev libwebp-dev
           filename: poom-gzdoom.zip
@@ -28,6 +29,7 @@ jobs:
           os: ubuntu-22.04
           submodule: gzdoom
           commit: f4cba8e
+          branch: master
           extra_options: -DCMAKE_C_COMPILER=clang-15 -DCMAKE_CXX_COMPILER=clang++-15
           deps_cmdline: sudo apt-get update && sudo apt-get install clang-15 libsdl2-dev libvpx-dev libwebp-dev
           filename: poom-gzdoom-clang.zip
@@ -37,6 +39,7 @@ jobs:
           os: ubuntu-latest
           submodule: UZDoom
           commit: 584dd1d1
+          branch: trunk
           extra_options: -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++
           deps_cmdline: |
             sudo apt-get update && sudo apt-get install \
@@ -80,7 +83,7 @@ jobs:
         shell: bash
         run: |
           cd ${{ matrix.config.submodule }}
-          git pull origin master
+          git pull origin ${{ matrix.config.branch }}
           git checkout ${{ matrix.config.commit }}
           cmake -B build -DCMAKE_BUILD_TYPE=${{ matrix.config.build_type }} -DPK3_QUIET_ZIPDIR=ON ${{ matrix.config.extra_options }} .
 
