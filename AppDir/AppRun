@@ -2,7 +2,7 @@
 
 DOOM_BIN_NAME="DOOM_BIN_NAME_R"
 TEMP_DIR_NAME="/tmp/doom-builder"
-DOOM_CONFIG_DIR="$HOME/.config/DOOM_BIN_NAME"
+DOOM_CONFIG_DIR="$HOME/.config/${DOOM_BIN_NAME}"
 
 usage() {
     echo "Usage: poom <options>

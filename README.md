@@ -2,12 +2,17 @@
 <img width="400" src="poom.png"><br/><br/>
 </p>
 
-Poom (Portable Doom) is a simple tool for creating customized, self contained Doom executables running on [GZDoom](https://zdoom.org/index). You can run these as is or use them for testing custom community WADs.
+Poom (Portable Doom) is a simple tool for creating customized, self contained Doom executables running on [UZDoom](https://github.com/UZDoom/UZDoom) and [GZDoom](https://github.com/ZDoom/gzdoom) sourceports. You can run these as is or use them for testing custom community WADs.
 
 
 ## Installation
 
-Download [poom.zip](https://github.com/exaroth/poom/releases/download/stable/poom.zip) from [Releases](https://github.com/exaroth/poom/releases/tag/stable) page and unzip.
+Poom ships with 2 versions, depending which source port you want to use:
+
+- UZDoom - [poom-uzdoom.zip](https://github.com/exaroth/poom/releases/download/stable/poom-uzdoom.zip)
+- GZDoom - [poom-gzdoom.zip](https://github.com/exaroth/poom/releases/download/stable/poom-gzdoom.zip)
+
+Download the version of your choice and unzip
 
 ## Usage
 
