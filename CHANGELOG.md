@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.2.0] 2025-18-12
 ### Added
 - Add UZDoom support
+### Changed
+- Ensure order of custom WADs is maintained based on build order
 ## [0.1.1] 2025-16-10
 ### Changed
 - Changed name from doom-builder to poom

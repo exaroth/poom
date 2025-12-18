@@ -78,6 +78,7 @@ do
 
     t_name=$(basename "$f" | xargs)
     t_name=$(echo "$t_name" | sed -e "s/ /-/g" -e "s/\"//g" -e "s/\'//g")
+    t_name=$(printf "%02d-%s" "$idx" "$t_name")
     cp -Rf "$f" "$TEMP_DIR_NAME/files/$t_name"
 done
 
