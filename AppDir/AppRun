@@ -56,7 +56,7 @@ else
         if [ -f "${DOOM_CONFIG_DIR}/$WAD" ]; then
             WAD="${DOOM_CONFIG_DIR}/$WAD"
         else
-            echo "WAD file $f does not exist"
+            echo "Base WAD file $f does not exist"
             exit 1
         fi
     fi
