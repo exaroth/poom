@@ -2,7 +2,8 @@
 
 export LD_LIBRARY_PATH="$APPDIR"/usr/lib:"$LD_LIBRARY_PATH"
 
-GZDOOM_DIR="$HOME/.config/gzdoom"
+DOOM_BIN_NAME="DOOM_BIN_NAME_R"
+DOOM_CONFIG_DIR="$HOME/.config/${DOOM_BIN_NAME}"
 BASE_WAD="${APPDIR}/GAME.WAD"
 
 usage() {
@@ -64,13 +65,13 @@ trap cleanup EXIT
 
 for file in "${ARGS[@]}"
 do
-    if [ -f "$file" ] || [ -f "${GZDOOM_DIR}/${file}" ]; then
+    if [ -f "$file" ] || [ -f "${DOOM_CONFIG_DIR}/${file}" ]; then
         mods+=("$(basename "$file")")
         t_name=$(basename "$file" | xargs)
         t_name=$(echo "$t_name" | sed -e "s/ /-/g" -e "s/\"//g" -e "s/\'//g")
         t_path="/tmp/.doom-shrt/${t_name}"
-        if [ -f "${GZDOOM_DIR}/${file}" ]; then
-            ln -s "$GZDOOM_DIR/$file" "$t_path"
+        if [ -f "${DOOM_CONFIG_DIR}/${file}" ]; then
+            ln -s "$DOOM_CONFIG_DIR/$file" "$t_path"
         else
             ln -s "$file" "$t_path"
         fi
@@ -89,5 +90,5 @@ for w in "${mods[@]}"
         echo "- $w"
 done 
 
-cmd="${APPDIR}/usr/bin/gzdoom -iwad $BASE_WAD ${f_str}"
+cmd="${APPDIR}/usr/bin/${DOOM_BIN_NAME} -iwad $BASE_WAD ${f_str}"
 $cmd
