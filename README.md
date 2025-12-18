@@ -9,8 +9,8 @@ Poom (Portable Doom) is a simple tool for creating customized, self contained Do
 
 Poom ships with 2 versions, depending which source port you want to use:
 
-- UZDoom - [poom-uzdoom.zip](https://github.com/exaroth/poom/releases/download/stable/poom-uzdoom.zip)
-- GZDoom - [poom-gzdoom.zip](https://github.com/exaroth/poom/releases/download/stable/poom-gzdoom.zip)
+- [UZDoom](https://github.com/exaroth/poom/releases/download/stable/poom-uzdoom.zip)
+- [GZDoom](https://github.com/exaroth/poom/releases/download/stable/poom-gzdoom.zip)
 
 Download the version of your choice and unzip
 
