@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export LD_LIBRARY_PATH="$APPDIR"/usr/lib:"$LD_LIBRARY_PATH"
+export LD_LIBRARY_PATH="$APPDIR"/usr/lib:"$APPDIR"/lib:"$LD_LIBRARY_PATH"
 
 DOOM_BIN_NAME="DOOM_BIN_NAME_R"
 DOOM_CONFIG_DIR="$HOME/.config/${DOOM_BIN_NAME}"
